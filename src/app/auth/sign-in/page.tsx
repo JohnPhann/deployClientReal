@@ -93,7 +93,7 @@ const Page = () => {
             <FormControl className="w-3/4" variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Tên</InputLabel>
               <OutlinedInput
-            id="outlined-adornment-password"
+            id="outlined-adornment-text"
             type="text"
             endAdornment={
               <InputAdornment position="end">
