@@ -1,6 +1,12 @@
 'use client'
 import React from 'react';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button,Checkbox , TextField , InputAdornment} from '@mui/material';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import axios from 'axios';
@@ -16,40 +22,28 @@ const Page = () => {
   const [sucess, setSucess] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isFocusedEmail, setIsFocusedEmail] = React.useState(false);
-  const [isFocusedPassword, setIsFocusedPassword] = React.useState(false);
-  let isEye = true;
   const [isChecked, setChecked] = React.useState(false);
 
 
+  const [showPassword, setShowPassword] = React.useState(false);
 
-  const changeEye = () => {
-      isEye = false;
-  }
-  const handleCheckboxChange = () => {
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+ const handleCheckboxChange = () => {
     setChecked(!isChecked);
   }
 
-  const handleLabelEmailClick = () => {
-    setIsFocusedEmail(true);
-  };
-  const handleLabelPasswordClick = () => {
-    setIsFocusedPassword(true);
-  };
   const handleInputEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
     const handleInputPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  const handleInputBlur = () => {
-    if (email === '') {
-      setIsFocusedEmail(false);
-    }
-    if (password === '') {
-      setIsFocusedPassword(false);
-    }
-  };
+  
   const formData = new FormData();
   formData.append('username',email);
   formData.append('password',password);
@@ -96,57 +90,44 @@ const Page = () => {
             <br />
             <form action="">
             <div className='w-full'>
-                    <TextField
-                    label='Tên'
-                    onClick={handleLabelEmailClick}
-                    type="email"
-                    variant="outlined"
-                    onChange={handleInputEmailChange}
-                    onBlur={handleInputBlur}
-                    className='w-3/4'
-                    InputProps={{
-                      startAdornment: (
-                        <MailOutlineIcon color="action" sx={{
-                          position: 'absolute',
-                          right: 8,
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          }}/>
-                        ),
-                        }}
-                    InputLabelProps={{
-                        shrink:isFocusedEmail,
-                        }}
-    
-                      />
+            <FormControl className="w-3/4" variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Tên</InputLabel>
+              <OutlinedInput
+            id="outlined-adornment-password"
+            type="text"
+            endAdornment={
+              <InputAdornment position="end">
+                <MailOutlineIcon />
+              </InputAdornment>
+            }
+            label="Tên"
+            onChange={handleInputEmailChange}
+          />
+        </FormControl>
             </div>
             <br/>
             <div className='w-full'>
-                    <TextField
-                    label='Mật khẩu'
-                    onClick={handleLabelPasswordClick}
-                    type="password"
-                    
-                    variant="outlined"
-                    onChange={handleInputPasswordChange}
-                    onBlur={handleInputBlur}
-                    className='w-3/4'
-                    InputProps={{
-          startAdornment: ( 
-            <RemoveRedEyeIcon color="action" sx={{
-              position: 'absolute',
-              right: 8,
-              top: '50%',
-              transform: 'translateY(-50%)',
-            }}/>
-          ),
-          
-        }}
-        InputLabelProps={{
-          shrink:isFocusedPassword,
-        }}
-    
-                  />
+            <FormControl className="w-3/4" variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Mật Khẩu</InputLabel>
+              <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Mật Khẩu"
+            onChange={handleInputPasswordChange}
+          />
+        </FormControl>
             </div>
             
             <div className='w-3/4 flex mx-auto'>
