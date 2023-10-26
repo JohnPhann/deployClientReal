@@ -240,7 +240,7 @@ interface ListStateHire {
 
   useEffect(() => {
     const fetchCategories = async ():Promise<void> => {
-        const res = await axios.get(`${urlDeploy}0/categories/`)
+        const res = await axios.get(`${urlDeploy}/categories/`)
         setListCategories(res.data)
        
     };
